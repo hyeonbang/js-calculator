@@ -1,5 +1,3 @@
-import { Calculator } from '/src/js/calculator';
-
 describe('계산기 테스트', () => {
   before('기능', () => {
     cy.visit('/');
@@ -10,13 +8,16 @@ describe('계산기 테스트', () => {
     clickOperator('+');
     clickDigit('5');
     clickOperator('=');
-    cy.get('#total').invoke('text').should('eq', String('7'));
+    cy.get('#total').invoke('text').should('eq','7');
     clickReset();
   });
 
   it('초기화', () => {
+    clickDigit('8');
+    clickDigit('9');
+    clickDigit('5');
     clickReset();
-    cy.get('#total').invoke('text').should('eq', String('0'));
+    cy.get('#total').invoke('text').should('eq','0');
   })
 
   it('빼기', () => {
@@ -24,7 +25,7 @@ describe('계산기 테스트', () => {
     clickOperator('-');
     clickDigit('3');
     clickOperator('=');
-    cy.get('#total').invoke('text').should('eq', String('-1'));
+    cy.get('#total').invoke('text').should('eq','-1');
     clickReset();
   })
 
@@ -33,7 +34,7 @@ describe('계산기 테스트', () => {
     clickOperator('X');
     clickDigit('3');
     clickOperator('=');
-    cy.get('#total').invoke('text').should('eq', String('18'));
+    cy.get('#total').invoke('text').should('eq','18');
     clickReset();
   })
 
@@ -43,7 +44,7 @@ describe('계산기 테스트', () => {
     clickOperator('/');
     clickDigit('5');
     clickOperator('=');
-    cy.get('#total').invoke('text').should('eq', String('2'));
+    cy.get('#total').invoke('text').should('eq','2');
     clickReset();
   })
 
@@ -52,9 +53,20 @@ describe('계산기 테스트', () => {
     clickOperator('/');
     clickDigit('6');
     clickOperator('=');
-    cy.get('#total').invoke('text').should('eq', String('1'));
+    cy.get('#total').invoke('text').should('eq','1');
     clickReset();
   })
+
+  it('나누기 :: 음수 값에 대한 소수점 이하 버림', () => {
+    clickOperator('-');
+    clickDigit('9');
+    clickOperator('/');
+    clickDigit('6');
+    clickOperator('=');
+    cy.get('#total').invoke('text').should('eq','-2');
+    clickReset();
+  })
+
 
   it('숫자는 한번에 최대 3자리 수까지 입력 가능', () => {
     clickDigit('9');
